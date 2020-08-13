@@ -1,0 +1,4 @@
+recursive-include lxp_skill_service/settings *.py
+recursive-include skill_app *.*
+include requirements.txt
+include Dockerfile

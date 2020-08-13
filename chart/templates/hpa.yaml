@@ -1,0 +1,26 @@
+{{- if .Values.hpa.enabled }}
+apiVersion: autoscaling/v2beta2 
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "lxp-skill-service.fullname" . }}-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: {{ .Values.hpa.target.apiVersion }}
+    kind: {{ .Values.hpa.target.kind }}
+    name: {{ include "lxp-skill-service.fullname" . }}
+  minReplicas: {{ .Values.hpa.minReplicas }}
+  maxReplicas: {{ .Values.hpa.maxReplicas }}
+  metrics: 
+  - type: Resource
+    resource:
+      name: cpu 
+      target:
+        type: Utilization 
+        averageValue: {{ .Values.hpa.cpuTarget }}
+  - type: Resource
+    resource:
+      name: memory 
+      target:
+        type: AverageValue 
+        averageValue: {{ .Values.hpa.memTarget }}
+{{ end }}

@@ -1,0 +1,39 @@
+{{- if .Values.build.enabled }}
+---
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  labels:
+    build: {{ .Chart.Name }}
+    app: {{ .Chart.Name }}
+  name: {{ .Chart.Name }}
+---
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  labels:
+    build: {{ .Chart.Name }}
+    app: {{ .Chart.Name }}
+    type: 'image'
+  name: {{ .Chart.Name }}
+spec:
+  nodeSelector:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: '{{ .Chart.Name }}:{{ .Values.build.build_tag | default "latest"}}'
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+      binary: {}
+      type: Binary
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: {{ .Values.build.base_image }}
+        namespace: openshift
+    type: Source
+  triggers: []
+{{ end }}

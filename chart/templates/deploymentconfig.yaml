@@ -1,0 +1,74 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    {{- include "lxp-skill-service.labels" . | nindent 4 }}
+  name: {{ include "lxp-skill-service.fullname" . }}
+spec:
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: 10
+  selector:
+    {{- include "lxp-skill-service.selectorLabels" . | nindent 4 }}
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        {{- include "lxp-skill-service.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - image: "{{ .Values.image_repository }}/{{ .Values.image_namespace | default .Release.Namespace }}/{{ .Values.image_name }}:{{ .Values.image_tag }}"
+        imagePullPolicy: Always
+        name: {{ include "lxp-skill-service.name" . }}
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        readinessProbe:
+          httpGet:
+            path: /api/skills
+            port: 8080
+          initialDelaySeconds: 10
+          timeoutSeconds: 1
+        env:
+          - name: APP_ENV
+            value: "{{ .Values.environment }}"
+          - name: DATABASE_SERVICE_HOST
+            value: {{ template "postgresql.fullname" . }}
+          - name: DATABASE_SERVICE_PORT
+            value: "{{ .Values.postgresql.service.port }}"
+          - name: DATABASE_NAME
+            valueFrom:
+              secretKeyRef:
+                key: {{ default "database" }}
+                name: {{ template "postgresql.name" . }}
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: {{ default "username" }}
+                name: {{ template "postgresql.name" . }}
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: {{ default "password" }}
+                name: {{ template "postgresql.name" . }}
+          - name: SECRET_KEY
+            value: "{{ .Values.secret_key }}"
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange

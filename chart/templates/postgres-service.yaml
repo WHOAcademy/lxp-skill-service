@@ -1,0 +1,20 @@
+---
+{{- if eq .Values.postgresql.enabled true -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "postgresql.fullname" . }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  ports:
+    - name: postgresql
+      port: {{ .Values.postgresql.service.port | default "5432" }}
+      protocol: TCP
+      targetPort: {{ .Values.postgresql.service.port | default "5432" }}
+  selector:
+    app: {{ .Chart.Name }}
+    deploymentconfig: {{ template "postgresql.name" . }}
+  sessionAffinity: None
+  type: {{ .Values.postgresql.service.type | default "ClusterIP" }}
+{{- end }}

@@ -1,0 +1,55 @@
+replicas: 1
+# build info not used atm
+build:
+  build_tag: latest
+  base_image: python-38:latest
+  enabled: false
+  source_docker_file_path: Dockerfile
+image_repository: quay.io
+image_name: lxp-skill-service
+image_namespace: whoacademy
+image_tag: 1.1.1
+
+# OCP route
+route: true
+
+
+#Django
+#have to get this from vault etc. maybe
+secret_key: gs7(p)fk=pf2(kbg*1wz$x+hnmw@y6%ij*x&pq4(^y8xjq$q#f
+environment: dev
+
+postgresql:
+  enabled: true
+  accessmode: ReadWriteOnce
+  service:
+    port: 5432
+    type: ClusterIP
+  image:
+    tag: "9.6"
+
+  storageClass:
+  accessMode: ReadWriteOnce
+  size: 5Gi
+
+  # To use an external secret for the password for an external PostgreSQL
+  # instance, set enabled to false and provide the name of the secret on the
+  # line below:
+  # existingSecret: ""
+  username: "bastian"
+  password: "balthazar"
+  database: "neverendingblog"
+
+  ## Set annotations on pvc
+  annotations: {}
+
+# Horizontal Pod Autoscaler
+hpa:
+  enabled: false
+  target:
+    apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+  minReplicas: 1
+  maxReplicas: 2
+  cpuTarget: 1000m
+  memTarget: 500Mi
