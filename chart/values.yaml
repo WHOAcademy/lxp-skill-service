@@ -16,7 +16,7 @@ route: true
 
 #Django
 #have to get this from vault etc. maybe
-secret_key: gs7(p)fk=pf2(kbg*1wz$x+hnmw@y6%ij*x&pq4(^y8xjq$q#f
+secret_key: atwz9c^z(#=squb-zso5n-#**pxd+yy35wbir!f)y*8=w5xf*$
 environment: dev
 
 postgresql:
