@@ -40,6 +40,11 @@ postgresql:
   password: "balthazar"
   database: "neverendingblog"
 
+  test:
+    service:
+      host: "test-postgresql"
+      port: 5432
+
   ## Set annotations on pvc
   annotations: {}
 

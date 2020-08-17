@@ -1,13 +1,4 @@
 from .base import *
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'test',
-        'USER': 'bastian',
-        'PASSWORD': 'balthazar',
-        'HOST': '172.30.105.228',
-        'PORT': '5432',
-    }
-}
+DATABASES['default']['HOST'] = os.getenv('TEST_DATABASE_SERVICE_HOST')
+DATABASES['default']['PORT'] = os.getenv('TEST_DATABASE_SERVICE_PORT')
