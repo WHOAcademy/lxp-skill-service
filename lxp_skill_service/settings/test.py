@@ -4,10 +4,10 @@ from .base import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASE_NAME'),
-        'USER': os.getenv('DATABASE_USER'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'NAME': 'neverendingblog',
+        'USER': 'bastian',
+        'PASSWORD': 'balthazar',
         'HOST': '172.30.105.228',
-        'PORT': os.getenv('DATABASE_SERVICE_PORT'),
+        'PORT': '5432',
     }
 }
