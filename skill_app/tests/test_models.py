@@ -7,9 +7,9 @@ class TestRoleModel(TestCase):
         RoleModel.objects.create(name="Title", slug="title")
 
     def test_get_all(self):
-        RoleModel.objects.create(title="Title1", slug="title-1")
-        RoleModel.objects.create(title="Title2", slug="title-2")
-        RoleModel.objects.create(title="Title3", slug="title-3")
+        RoleModel.objects.create(name="Title1", slug="title-1")
+        RoleModel.objects.create(name="Title2", slug="title-2")
+        RoleModel.objects.create(name="Title3", slug="title-3")
 
         roles = RoleModel.objects.all()
         self.assertEqual(len(roles), 3)
