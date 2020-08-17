@@ -62,10 +62,6 @@ spec:
               secretKeyRef:
                 key: {{ default "password" }}
                 name: {{ template "postgresql.name" . }}
-          - name: TEST_DATABASE_SERVICE_HOST
-            value: "{{ .Values.postgresql.test.service.name }}.{{ .Values.image_namespace }}"
-          - name: TEST_DATABASE_SERVICE_PORT
-            value: "{{ .Values.postgresql.test.service.port }}"
           - name: SECRET_KEY
             value: "{{ .Values.secret_key }}"
       dnsPolicy: ClusterFirst
