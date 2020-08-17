@@ -42,7 +42,7 @@ postgresql:
 
   test:
     service:
-      host: "test-postgresql"
+      name: "test-postgresql"
       port: 5432
 
   ## Set annotations on pvc
