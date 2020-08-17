@@ -1,9 +1,9 @@
-from django.test import SimpleTestCase
-from skill_app.models import SkillModel
+from django.test import SimpleTestCase, TestCase
+from skill_app.models import SkillModel, RoleModel
 
 
-class TestCourseModel(SimpleTestCase):
-    def test_obj(self):
-        course = SkillModel(title="Title", slug="title")
-        self.assertTrue(isinstance(course, SkillModel))
-        self.assertEqual(course.title, "Title")
+class TestRoleModel(TestCase):
+    def test_create_role(self):
+        RoleModel.objects.create(name="Title", slug="title")
+
+
