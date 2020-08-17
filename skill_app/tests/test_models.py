@@ -11,5 +11,5 @@ class TestRoleModel(TestCase):
         RoleModel.objects.create(title="Title2", slug="title-2")
         RoleModel.objects.create(title="Title3", slug="title-3")
 
-        courses = RoleModel.objects.all()
-        self.assertEqual(len(courses), 3)
+        roles = RoleModel.objects.all()
+        self.assertEqual(len(roles), 3)
