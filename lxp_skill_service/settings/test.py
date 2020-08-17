@@ -1,9 +1,12 @@
 from .base import *
-import importlib
 
-settings = importlib.import_module('lxp_skill_service.settings.' + os.getenv('APP_ENV'))
-
-settings.DATABASES['default']['HOST'] = os.getenv('TEST_DATABASE_SERVICE_HOST')
-settings.DATABASES['default']['PORT'] = os.getenv('TEST_DATABASE_SERVICE_PORT')
-
-DATABASES = settings.DATABASES
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'test',
+        'USER': 'bastian',
+        'PASSWORD': 'balthazar',
+        'HOST': os.getenv('TEST_DATABASE_SERVICE_HOST'),
+        'PORT': os.getenv('TEST_DATABASE_SERVICE_PORT'),
+    }
+}
