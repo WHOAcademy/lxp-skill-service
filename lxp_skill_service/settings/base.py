@@ -127,7 +127,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TEST_RUNNER = 'lxp_skill_service.testrunners.NoseTestSuiteRunner'
+TEST_RUNNER = 'lxp_skill_service.testrunners.NoseUnitTestSuiteRunner'
 
 
 # Cross Origin Resource Sharing (CORS) Configuration
