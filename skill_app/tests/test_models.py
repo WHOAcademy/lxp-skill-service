@@ -1,8 +1,10 @@
+from django.db import DataError
 from django.test import SimpleTestCase, TestCase
 from skill_app.models import SkillModel, RoleModel
 
 
 class TestRoleModel(TestCase):
+
     def test_create_role(self):
         RoleModel.objects.create(name="Title", slug="title")
 
@@ -13,3 +15,20 @@ class TestRoleModel(TestCase):
 
         roles = RoleModel.objects.all()
         self.assertEqual(len(roles), 3)
+
+    def test_role_obj(self):
+        RoleModel.objects.create(name="Title", slug="title")
+        role = RoleModel.objects.all()[0]
+        self.assertTrue(isinstance(role, RoleModel))
+        self.assertEqual(role.name, "Title")
+        self.assertEqual(role.slug, "title")
+
+    def test_name_max_length(self):
+        with self.assertRaises(DataError):
+            title = "This is a test This is a test This is a test This is a test "
+            RoleModel.objects.create(name=title, slug="title")
+
+    def test_slug_max_length(self):
+        with self.assertRaises(DataError):
+            slug = "This is a test This is a test This is a test This is a test This is a test "
+            RoleModel.objects.create(name="Title", slug=slug)
