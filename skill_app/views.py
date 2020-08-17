@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 
 from skill_app import serializers, models
@@ -9,3 +10,5 @@ class SkillListView(generics.ListAPIView):
     """
     serializer_class = serializers.SkillSerializer
     queryset = models.SkillModel.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['roles']
