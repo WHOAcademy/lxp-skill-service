@@ -1,4 +1,3 @@
-from django.test import SimpleTestCase, TestCase
 from rest_framework.test import APITestCase
 from django.urls import reverse
 
@@ -63,4 +62,4 @@ class TestSkillView(APITestCase):
         response = self.client.get(url, data, format='json')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 0)
+        self.assertEqual(len(response.data), 2)

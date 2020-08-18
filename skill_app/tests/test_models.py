@@ -1,5 +1,5 @@
 from django.db import DataError, IntegrityError
-from django.test import SimpleTestCase, TestCase
+from django.test import TestCase
 from skill_app.models import SkillModel, RoleModel
 
 
