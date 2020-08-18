@@ -6,7 +6,7 @@ DATABASES = {
         'NAME': 'test',
         'USER': 'bastian',
         'PASSWORD': 'balthazar',
-        'HOST': 'localhost',
-        'PORT': 5432
+        'HOST': os.getenv('TEST_DATABASE_SERVICE_HOST'),
+        'PORT': os.getenv('TEST_DATABASE_SERVICE_PORT'),
     }
 }
