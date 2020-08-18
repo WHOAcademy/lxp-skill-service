@@ -100,7 +100,7 @@ pipeline {
                     env.VERSIONED_APP_NAME = "${NAME}-${VERSION}"
                     env.PACKAGE = "${VERSIONED_APP_NAME}.tar.gz"
                     env.SECRET_KEY = 'gs7(p)fk=pf2(kbg*1wz$x+hnmw@y6%ij*x&pq4(^y8xjq$q#f' //TODO: get it from secret vault
-                    env.TEST_DATABASE_SERVICE_HOST = "test-postgresql.${TARGET_NAMESPACE}"
+                    env.TEST_DATABASE_SERVICE_HOST = "test-postgresql.labs-dev"
                     env.TEST_DATABASE_SERVICE_PORT = "5432"
                 }
                 sh 'printenv'
