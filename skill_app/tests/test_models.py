@@ -32,3 +32,13 @@ class TestRoleModel(TestCase):
         with self.assertRaises(DataError):
             slug = "This is a test This is a test This is a test This is a test This is a test "
             RoleModel.objects.create(name="Title", slug=slug)
+
+    def test_name_unique(self):
+        with self.assertRaises(DataError):
+            RoleModel.objects.create(name="Title", slug="title-1")
+            RoleModel.objects.create(name="Title", slug="title-2")
+
+    def test_slug_unique(self):
+        with self.assertRaises(DataError):
+            RoleModel.objects.create(name="Title 1", slug="title")
+            RoleModel.objects.create(name="Title 2", slug="title")
