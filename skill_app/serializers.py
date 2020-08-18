@@ -5,4 +5,5 @@ from .models import SkillModel
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = SkillModel
-        fields = '__all__'
+        exclude = ('roles',)
+

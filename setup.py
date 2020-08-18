@@ -11,6 +11,7 @@ setup(name='lxp-skill-service',
           'coverage==5.2',
           'django-nose==1.4.6',
           'drf-yasg==1.17.1',
-          'django-cors-headers==3.4.0'
+          'django-cors-headers==3.4.0',
+          'django-filter==2.3.0'
       ],
       scripts=['manage.py'])

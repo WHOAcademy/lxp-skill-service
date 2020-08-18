@@ -4,5 +4,5 @@ from skill_app import views
 
 
 urlpatterns = [
-    path('Skills', views.SkillListView.as_view(), name='list-skills')
+    path('skills', views.SkillListView.as_view(), name='list-skills')
 ]
