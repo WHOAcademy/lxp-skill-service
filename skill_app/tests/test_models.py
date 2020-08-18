@@ -1,9 +1,9 @@
 from django.test import SimpleTestCase
-from skill_app.models import SkillModel
+from skill_app.models import RoleModel
 
 
-class TestCourseModel(SimpleTestCase):
+class TestRoleModel(SimpleTestCase):
     def test_obj(self):
-        course = SkillModel(title="Title", slug="title")
-        self.assertTrue(isinstance(course, SkillModel))
-        self.assertEqual(course.title, "Title")
+        role = RoleModel(name="Title", slug="title")
+        self.assertTrue(isinstance(role, RoleModel))
+        self.assertEqual(role.name, "Title")
