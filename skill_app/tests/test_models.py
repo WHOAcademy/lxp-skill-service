@@ -1,4 +1,4 @@
-from django.db import DataError
+from django.db import DataError, IntegrityError
 from django.test import SimpleTestCase, TestCase
 from skill_app.models import SkillModel, RoleModel
 
@@ -34,11 +34,11 @@ class TestRoleModel(TestCase):
             RoleModel.objects.create(name="Title", slug=slug)
 
     def test_name_unique(self):
-        with self.assertRaises(DataError):
+        with self.assertRaises(IntegrityError):
             RoleModel.objects.create(name="Title", slug="title-1")
             RoleModel.objects.create(name="Title", slug="title-2")
 
     def test_slug_unique(self):
-        with self.assertRaises(DataError):
+        with self.assertRaises(IntegrityError):
             RoleModel.objects.create(name="Title 1", slug="title")
             RoleModel.objects.create(name="Title 2", slug="title")
