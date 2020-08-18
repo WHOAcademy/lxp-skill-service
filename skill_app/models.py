@@ -14,8 +14,8 @@ class RoleModel(models.Model):
 
 class SkillModel(models.Model):
     roles = models.ManyToManyField(to=RoleModel)
-    name = models.CharField(_('Skill name'), max_length=45)
-    slug = models.SlugField(_('Skill slug'), max_length=64)
+    name = models.CharField(_('Skill name'), max_length=45, unique=True)
+    slug = models.SlugField(_('Skill slug'), max_length=64, unique=True)
 
     class Meta:
         db_table = _('skills')
