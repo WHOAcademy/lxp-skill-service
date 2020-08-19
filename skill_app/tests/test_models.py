@@ -25,12 +25,12 @@ class TestRoleModel(TestCase):
 
     def test_name_max_length(self):
         with self.assertRaises(DataError):
-            title = "This is a test This is a test This is a test This is a test "
+            title = "Title" * 20
             RoleModel.objects.create(name=title, slug="title")
 
     def test_slug_max_length(self):
         with self.assertRaises(DataError):
-            slug = "This is a test This is a test This is a test This is a test This is a test "
+            slug = "title" * 20
             RoleModel.objects.create(name="Title", slug=slug)
 
     def test_name_unique(self):
@@ -78,12 +78,12 @@ class TestSkillModel(TestCase):
 
     def test_name_max_length(self):
         with self.assertRaises(DataError):
-            title = "This is a test This is a test This is a test This is a test "
+            title = "Title" * 20
             SkillModel.objects.create(name=title, slug="title")
 
     def test_slug_max_length(self):
         with self.assertRaises(DataError):
-            slug = "This is a test This is a test This is a test This is a test This is a test "
+            slug = "title" * 20
             SkillModel.objects.create(name="Title", slug=slug)
 
     def test_name_unique(self):
