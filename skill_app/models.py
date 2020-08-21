@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django_prometheus.models import ExportModelOperationsMixin
 
 
 class RoleModel(models.Model):
@@ -12,7 +13,7 @@ class RoleModel(models.Model):
         verbose_name_plural = _('Roles')
 
 
-class SkillModel(models.Model):
+class SkillModel(ExportModelOperationsMixin('skills'), models.Model):
     roles = models.ManyToManyField(to=RoleModel)
     name = models.CharField(_('Skill name'), max_length=45, unique=True)
     slug = models.SlugField(_('Skill slug'), max_length=64, unique=True)
@@ -21,3 +22,10 @@ class SkillModel(models.Model):
         db_table = _('skills')
         verbose_name = _('Skill')
         verbose_name_plural = _('Skills')
+
+
+class PrometheusModel(ExportModelOperationsMixin('prom'), models.Model):
+    name = models.CharField(max_length=254)
+
+    class Meta:
+        db_table = _('prometheus')

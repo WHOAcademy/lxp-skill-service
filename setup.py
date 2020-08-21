@@ -12,5 +12,6 @@ setup(name='lxp-skill-service',
           'django-nose==1.4.6',
           'drf-yasg==1.17.1',
           'django-cors-headers==3.4.0'
+          'django-prometheus==2.0.0'
       ],
       scripts=['manage.py'])
