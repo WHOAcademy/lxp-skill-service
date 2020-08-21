@@ -34,12 +34,18 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        readinessProbe:
+        livenessProbe:
           httpGet:
-            path: /api/skills
+            path: /liveness
             port: 8080
           initialDelaySeconds: 10
-          timeoutSeconds: 1
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /readiness
+            port: 8080
+          initialDelaySeconds: 3
+          timeoutSeconds: 3
         env:
           - name: APP_ENV
             value: "{{ .Values.environment }}"
