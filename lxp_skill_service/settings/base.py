@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 import django_opentracing
-import opentracing
 from jaeger_client import Config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
