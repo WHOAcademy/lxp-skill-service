@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+import django_opentracing
+from jaeger_client import Config
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -47,6 +50,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django_opentracing.OpenTracingMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'lxp_skill_service.middlewares.HealthCheckMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -135,3 +139,31 @@ TEST_RUNNER = 'lxp_skill_service.testrunners.NoseUnitTestSuiteRunner'
 # https://github.com/adamchainz/django-cors-headers#configuration
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+
+# Jeager Configuration
+# https://github.com/piratos/python-django#setting-up-tracing
+
+# if not included, defaults to True.
+# has to come before OPENTRACING_TRACING setting because python...
+OPENTRACING_TRACE_ALL = True
+
+config = Config(
+    config={  # usually read from some yaml config
+        'sampler': {
+            'type': 'const',
+            'param': 1,
+        },
+        'local_agent': {
+            'reporting_host': 'localhost',
+            'reporting_port': '5775',
+        },
+        'logging': True,
+    },
+    service_name='lxp-skill-service',
+    validate=True,
+)
+
+# this call also sets opentracing.tracer
+tracer = config.initialize_tracer()
+OPENTRACING_TRACING = django_opentracing.DjangoTracing(tracer)
