@@ -11,7 +11,8 @@ pipeline {
         // Config repo managed by ArgoCD details
         ARGOCD_CONFIG_REPO = "github.com/WHOAcademy/lxp-config.git"
         ARGOCD_CONFIG_REPO_PATH = "lxp-deployment/values-test.yaml"
-        ARGOCD_CONFIG_REPO_BRANCH = "master"
+        ARGOCD_CONFIG_REPO_BRANCH = "who-int"
+        SYSTEM_TEST_BRANCH = "master-who-int"
 
           // Job name contains the branch eg ds-app-feature%2Fjenkins-123
         JOB_NAME = "${JOB_NAME}".replace("%2F", "-").replace("/", "-")
@@ -245,7 +246,7 @@ pipeline {
                         }
                     }
                     when {
-                        expression { GIT_BRANCH ==~ /(.*master)/ }
+                        expression { GIT_BRANCH.startsWith("master") }
                     }
                     steps {
                         echo '### Commit new image tag to git ###'
@@ -258,7 +259,7 @@ pipeline {
                             git config --global user.name "Jenkins"
                             git config --global push.default simple
                             git add ${ARGOCD_CONFIG_REPO_PATH}
-                            git commit -m "🚀 AUTOMATED COMMIT - Deployment new app version ${VERSION} 🚀" || rc=$?
+                            git commit -m "🚀 AUTOMATED COMMIT - Deployment of ${APP_NAME} at version ${VERSION} 🚀" || rc=$?
                             git remote set-url origin  https://${GIT_CREDS_USR}:${GIT_CREDS_PSW}@${ARGOCD_CONFIG_REPO}
                             git push -u origin ${ARGOCD_CONFIG_REPO_BRANCH}
                             # Give ArgoCD a moment to gather it's thoughts and roll out a deployment before Jenkins races on to test things
@@ -337,13 +338,13 @@ pipeline {
                 }
             }
             when {
-                expression { GIT_BRANCH ==~ /(.*master)/ }
+                expression { GIT_BRANCH.startsWith("master") }
             }
             steps {
                 sh  '''
                     echo "TODO - Run tests"
                 '''
-                build job: 'system-tests/master', parameters: [[$class: 'StringParameterValue', name: 'APP_NAME', value: "${APP_NAME}" ],[$class: 'StringParameterValue', name: 'VERSION', value: "${VERSION}"]], wait: false
+                build job: "system-tests/${SYSTEM_TEST_BRANCH}", parameters: [[$class: 'StringParameterValue', name: 'APP_NAME', value: "${APP_NAME}" ],[$class: 'StringParameterValue', name: 'VERSION', value: "${VERSION}"]], wait: false
             }
         }
     }
