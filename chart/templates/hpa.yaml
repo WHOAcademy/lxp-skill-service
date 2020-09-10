@@ -15,7 +15,7 @@ spec:
     resource:
       name: cpu 
       target:
-        type: Utilization 
+        type: AverageValue 
         averageValue: {{ .Values.hpa.cpuTarget }}
   - type: Resource
     resource:
