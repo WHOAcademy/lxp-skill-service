@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='lxp-skill-service',
-      version='1.4.7',
+      version='1.4.8',
       packages=find_packages(),
       install_requires=[
           'Django~=3.0.8',
